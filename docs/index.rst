@@ -16,6 +16,7 @@ Contents:
    form-elements
    fields
    groups
+   info-block
 
 
 

@@ -10,13 +10,22 @@ in general every field has next attributes:
 - placeholder *not implemented on frontend*
 - help_text
 - repeatable *not implemented on frontend*
+- extra
+- styling
 
-repeatable usually used for multi-selection with choices. in this case list of values will be submitted
+repeatable - usually used for multi-selection with choices. in this case list of values will be submitted
+extra - very specific information in any type. can be used to make special fields. will be provided into json form structure as is
+styling - see `Field styling` section
 
 example of field with help text:
+
 .. code-block:: python
 
-    TextField('text_field', label='Text field', help_text='Some text to provide additional information about field')
+    TextField(
+        'text_field', 
+        label='Text field', 
+        help_text='Some text to provide additional information about field'
+    )
 
 .. image:: _static/images/field-text-with-help.png
 
@@ -27,7 +36,7 @@ Simple typed fields
 value is validated to match field type
 
 TextField
----------
+_________
 
 value converted to string during validation
 
@@ -39,10 +48,9 @@ value converted to string during validation
 
 
 IntegerField
-------------
+____________
 
-accept only integer values. can accept text if valid number contained inside
-*field type is incorrect on frontend, i can type float*
+accept only integer values. *field type is incorrect on frontend, i can type float*
 
 .. code-block:: python
 
@@ -52,7 +60,7 @@ accept only integer values. can accept text if valid number contained inside
 
 
 FloatField
-----------
+__________
 
 accept float numbers. can accept text if valid number contained inside
 
@@ -64,7 +72,7 @@ accept float numbers. can accept text if valid number contained inside
 
 
 BooleanField
-------------
+____________
 
 *not implemented on frontend actually, workaround is to use choicefield with boolean values*
 
@@ -80,13 +88,10 @@ BooleanField
 .. image:: _static/images/field-boolean-choices.png
 
 
-Likert Scale
-------------
+Likert Scale (ChoiceField)
+--------------------------
 
-ChoiceField
------------
-
-likert scale with pre-defined options. they can be in any type. options are be defined in metadata, whilst only key for them is provided to field.
+likert scale has pre-defined options. they should be defined in metadata, whilst only key for them is provided to field. values can be in any type.
 
 .. code-block:: python
 
@@ -103,14 +108,14 @@ likert scale with pre-defined options. they can be in any type. options are be d
 .. image:: _static/images/field-choices.png
 
 
-Options for choice field
+Options for likert scale
 ------------------------
 
 Options can be defined in multiple ways, depending from level of control and frequency of changes
 
 
 LocalFlatOptions
-----------------
+________________
 
 *not implemented on frontend*
 values will be displayed to user as it is
@@ -121,7 +126,7 @@ values will be displayed to user as it is
 
 
 LocalPairsOptions
------------------
+_________________
 
 value and displayed label should be specified for every option
 
@@ -137,7 +142,7 @@ value and displayed label should be specified for every option
 
 
 RemoteOptions
------------------
+_____________
 
 options fetched from remote url. should be used when options updated frequently and couldn't be provided in form. if url require authentication, auth_required flag should be used to give more context to the frontend.
 *not implemented on frontend*
@@ -152,19 +157,19 @@ File fields
 -----------
 
 UploadedFileField
------------------
+_________________
 
 file field designed to be used in etools to reuse forms framework for online. accept attachment id as value
 
 
 RemoteFileField
----------------
+_______________
 
 accept file as url to be downloaded. on save attachment is created and separated task delayed to download attached file from link. there is no special mechanism to resolve bad urls, those issues should be fixed manually.
 
 
 MixedUploadedRemoteFileField
-----------------------------
+____________________________
 
 combine both fields above. when 'http' is provided in value, act as RemoteFileField else as UploadedFileField. it means, MixedUploadedRemoteFileField can be used everywhere when file input is needed
 
@@ -192,3 +197,38 @@ combine both fields above. when 'http' is provided in value, act as RemoteFileFi
 
 .. image:: _static/images/field-file-group.png
 .. image:: _static/images/field-file-popup.png
+
+
+Fields validations
+------------------
+
+fields are validated both on backend and frontend. like options, validations are initialized in metadata and then just keys are defined in field
+
+.. code-block:: python
+
+    TextField(phone_'number', validations=['phone_regex'])
+
+    contact_book.metadata.validations['phone_regex'] = RegexTextValidation(r'\d{7}')
+
+text validations:
+
+- MaxLengthTextValidation
+- RegexTextValidation
+
+
+number validations:
+
+- LessThanValidation
+- GreaterThanValidation
+
+
+
+Fields styling
+--------------
+
+currently implemented styling options for fields:
+
+- wide - fill width field width instead of half
+- additional - field will be grey
+
+.. image:: _static/images/fields-styling.png
