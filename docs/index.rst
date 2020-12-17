@@ -10,9 +10,12 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-   :glob:
-
-   *
+   
+   quickstart
+   blueprint
+   form-elements
+   fields
+   groups
 
 
 
@@ -22,4 +25,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
