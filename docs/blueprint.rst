@@ -1,6 +1,8 @@
 Blueprint
 =========
 
+Blueprint is template which contains all required information to display form.
+
 Main parts of each form are:
 
 - Code (should be unique, used to update form in olc)

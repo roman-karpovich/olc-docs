@@ -228,7 +228,12 @@ Fields styling
 
 currently implemented styling options for fields:
 
-- wide - fill width field width instead of half
+- wide - fill width field instead of half
 - additional - field will be grey
+
+.. code-block:: python
+
+    TextField('wide_field', label='Wide field', styling=['wide'])
+    TextField('additional_field', label='Wide Additional field', styling=['wide', 'additional'])
 
 .. image:: _static/images/fields-styling.png
