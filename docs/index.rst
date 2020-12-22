@@ -17,6 +17,7 @@ Contents:
    fields
    groups
    info-block
+   metadata
 
 
 
